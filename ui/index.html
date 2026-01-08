@@ -20,171 +20,280 @@
 
       <div class="topbar-actions">
         <button id="copyBtn" class="btn btn-primary ripple" type="button">
-          Copy to clipboard
+          <span class="btn-label">Copy to clipboard</span>
+          <span class="btn-check" aria-hidden="true">✓</span>
         </button>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <section class="card appear">
-      <div class="card-title">
-        <h2>Requester & Schedule</h2>
-        <span class="pill">Required fields marked *</span>
-      </div>
-
-      <div class="grid2">
-        <div class="field">
-          <label for="user_email">Requester email <span class="req">*</span></label>
-          <input id="user_email" placeholder="email@noreply.com" autocomplete="email" />
+    <!-- Accordion: Requester & Schedule -->
+    <section class="card accordion appear" data-accordion data-default="open">
+      <button class="acc-head" type="button" aria-expanded="true">
+        <div class="acc-left">
+          <h2>Requester & Schedule</h2>
+          <span class="pill">Required fields marked *</span>
         </div>
-
-        <div class="field">
-          <label for="backup_contact">Backup contact (email)(required for CR approval)</label>
-          <input id="backup_contact" placeholder="email@noreply.com" autocomplete="email" />
+        <div class="acc-right" aria-hidden="true">
+          <span class="chev">⌄</span>
         </div>
-      </div>
+      </button>
 
-      <div class="grid2">
-        <div class="field">
-          <label for="target_end_date_picker">Target end date <span class="req">*</span></label>
-          <input id="target_end_date_picker" type="date" />
-          <div class="hint">
-            Cannot be <em>today</em>. Output is <code>MM-DD-YY</code>. Workflow normalizes to 05:30am PT.
+      <div class="acc-body">
+        <div class="grid2">
+          <div class="field" data-field="user_email">
+            <label for="user_email">Requester email <span class="req">*</span></label>
+            <input id="user_email" placeholder="email@noreply.com" autocomplete="email" />
+            <div class="field-sub">
+              <div class="hint">Assigned-to for the CR.</div>
+              <div class="error" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="field" data-field="backup_contact">
+            <label for="backup_contact">Backup contact (email)(required for CR approval)</label>
+            <input id="backup_contact" placeholder="email@noreply.com" autocomplete="email" />
+            <div class="field-sub">
+              <div class="hint">Optional, but recommended.</div>
+              <div class="error" aria-live="polite"></div>
+            </div>
           </div>
         </div>
 
-        <div class="field">
-          <label for="last_notified_when_picker">When were impacted users last notified? <span class="req">*</span></label>
-          <input id="last_notified_when_picker" type="date" />
-          <div class="hint">Output is <code>MM/DD/YY</code>. Cannot be in the future.</div>
+        <div class="grid2">
+          <div class="field" data-field="target_end_date_picker">
+            <label for="target_end_date_picker">Target end date <span class="req">*</span></label>
+            <input id="target_end_date_picker" type="date" />
+            <div class="field-sub">
+              <div class="hint">
+                Cannot be <em>today</em>. Output is <code>MM-DD-YY</code>. Workflow normalizes to 05:30am PT.
+              </div>
+              <div class="error" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="field" data-field="last_notified_when_picker">
+            <label for="last_notified_when_picker">When were impacted users last notified? <span class="req">*</span></label>
+            <input id="last_notified_when_picker" type="date" />
+            <div class="field-sub">
+              <div class="hint">Output is <code>MM/DD/YY</code>. Cannot be in the future.</div>
+              <div class="error" aria-live="polite"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="card appear delay-1">
-      <div class="card-title">
-        <h2>Overview</h2>
-      </div>
+    <!-- Accordion: Overview -->
+    <section class="card accordion appear delay-1" data-accordion data-default="open">
+      <button class="acc-head" type="button" aria-expanded="true">
+        <div class="acc-left">
+          <h2>Overview</h2>
+          <span class="pill subtle">Big text fields auto-expand</span>
+        </div>
+        <div class="acc-right" aria-hidden="true">
+          <span class="chev">⌄</span>
+        </div>
+      </button>
 
-      <div class="field">
-        <label for="description">Description <span class="req">*</span></label>
-        <textarea id="description" rows="3"
-          placeholder="Put as much detail as possible about the change. Paste any necessary info/technical details."></textarea>
-      </div>
-
-      <div class="field">
-        <label for="business_value">Business value (executive summary) <span class="req">*</span></label>
-        <textarea id="business_value" rows="2"
-          placeholder="Business-speak: benefits, outcomes, KPIs, etc."></textarea>
-      </div>
-
-      <div class="field">
-        <label for="implementation_plan">Implementation plan <span class="req">*</span></label>
-        <textarea id="implementation_plan" rows="2"
-          placeholder="Explain the implementation plan, providing details."></textarea>
-      </div>
-
-      <div class="field">
-        <label for="backout_plan">Backout plan <span class="req">*</span></label>
-        <textarea id="backout_plan" rows="2"
-          placeholder="How to revert the change if needed."></textarea>
-      </div>
-
-      <div class="field">
-        <label for="validation_plan">Validation plan <span class="req">*</span></label>
-        <textarea id="validation_plan" rows="2"
-          placeholder="Pre/post checks, success criteria, monitoring, etc."></textarea>
-      </div>
-    </section>
-
-    <section class="card appear delay-2">
-      <div class="card-title">
-        <h2>Audience & Contacts</h2>
-      </div>
-
-      <div class="field">
-        <label for="impacted_groups">Impacted groups <span class="req">*</span></label>
-        <input id="impacted_groups" placeholder="Group name(s)" />
-      </div>
-
-      <div class="field">
-        <!-- Keep EXACT spacing to match your issue form label -->
-        <label for="impacted_users_emails">Leadership notified  (email) <span class="req">*</span></label>
-        <input id="impacted_users_emails" placeholder="email@noreply.com" autocomplete="email" />
-        <div class="hint">You can paste multiple emails separated by commas/spaces.</div>
-      </div>
-
-      <div class="grid2">
-        <div class="field">
-          <label for="last_notified_how">How were impacted users last notified? <span class="req">*</span></label>
-          <select id="last_notified_how">
-            <option value="">Select…</option>
-            <option>Meeting</option>
-            <option>Teams message</option>
-            <option>Email</option>
-            <option>Call</option>
-            <option>In Person</option>
-          </select>
+      <div class="acc-body">
+        <div class="field" data-field="description">
+          <label for="description">Description <span class="req">*</span></label>
+          <textarea id="description" rows="2"
+            placeholder="Put as much detail as possible about the change. Paste any necessary info/technical details."></textarea>
+          <div class="field-sub">
+            <div class="hint">Minimum 30 characters.</div>
+            <div class="counter" data-counter-for="description"></div>
+            <div class="error" aria-live="polite"></div>
+          </div>
         </div>
 
-        <div class="field">
-          <label for="effort">Effort/Project <span class="req">*</span></label>
-          <select id="effort">
-            <option value="">Select…</option>
-            <option>Defect Resolution</option>
-            <option>Executive Sponsor Projects</option>
-            <option>Maintenance and Operation</option>
-            <option>Legislative Mandate</option>
-            <option>User Request</option>
-            <option>Test Environment</option>
-          </select>
+        <div class="field" data-field="business_value">
+          <label for="business_value">Business value (executive summary) <span class="req">*</span></label>
+          <textarea id="business_value" rows="2"
+            placeholder="Business-speak: benefits, outcomes, KPIs, etc."></textarea>
+          <div class="field-sub">
+            <div class="hint">Minimum 15 characters.</div>
+            <div class="counter" data-counter-for="business_value"></div>
+            <div class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="field" data-field="implementation_plan">
+          <label for="implementation_plan">Implementation plan <span class="req">*</span></label>
+          <textarea id="implementation_plan" rows="2"
+            placeholder="Explain the implementation plan, providing details."></textarea>
+          <div class="field-sub">
+            <div class="hint">Minimum 15 characters.</div>
+            <div class="counter" data-counter-for="implementation_plan"></div>
+            <div class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="field" data-field="backout_plan">
+          <label for="backout_plan">Backout plan <span class="req">*</span></label>
+          <textarea id="backout_plan" rows="2"
+            placeholder="How to revert the change if needed."></textarea>
+          <div class="field-sub">
+            <div class="hint">Minimum 10 characters.</div>
+            <div class="counter" data-counter-for="backout_plan"></div>
+            <div class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="field" data-field="validation_plan">
+          <label for="validation_plan">Validation plan <span class="req">*</span></label>
+          <textarea id="validation_plan" rows="2"
+            placeholder="Pre/post checks, success criteria, monitoring, etc."></textarea>
+          <div class="field-sub">
+            <div class="hint">Minimum 10 characters.</div>
+            <div class="counter" data-counter-for="validation_plan"></div>
+            <div class="error" aria-live="polite"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="card appear delay-3">
-      <div class="card-title">
-        <h2>Confirmations</h2>
-        <span class="pill subtle">Matches Issue Form option text</span>
-      </div>
+    <!-- Accordion: Audience & Contacts -->
+    <section class="card accordion appear delay-2" data-accordion data-default="open">
+      <button class="acc-head" type="button" aria-expanded="true">
+        <div class="acc-left">
+          <h2>Audience & Contacts</h2>
+        </div>
+        <div class="acc-right" aria-hidden="true">
+          <span class="chev">⌄</span>
+        </div>
+      </button>
 
-      <div class="checks">
-        <label class="check">
-          <input type="checkbox" id="chk_impacts_public" />
-          <span>Impacts the public.</span>
-        </label>
-        <label class="check">
-          <input type="checkbox" id="chk_involves_cdt" />
-          <span>Involves CDT.</span>
-        </label>
-        <label class="check">
-          <input type="checkbox" id="chk_new_app_esd" />
-          <span>New app (ESD needs to know).</span>
-        </label>
-        <label class="check">
-          <input type="checkbox" id="chk_vendor_impact" />
-          <span>Impact a Vendors.</span>
-        </label>
+      <div class="acc-body">
+        <div class="field" data-field="impacted_groups">
+          <label for="impacted_groups">Impacted groups <span class="req">*</span></label>
+          <input id="impacted_groups" placeholder="Group name(s)" />
+          <div class="field-sub">
+            <div class="hint">Who is impacted.</div>
+            <div class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="field" data-field="impacted_users_emails">
+          <!-- Keep EXACT spacing to match your issue form label -->
+          <label for="impacted_users_emails">Leadership notified  (email) <span class="req">*</span></label>
+          <input id="impacted_users_emails" placeholder="email@noreply.com" autocomplete="email" />
+          <div class="field-sub">
+            <div class="hint">Multiple emails OK (comma/space-separated).</div>
+            <div class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field" data-field="last_notified_how">
+            <label for="last_notified_how">How were impacted users last notified? <span class="req">*</span></label>
+            <select id="last_notified_how">
+              <option value="">Select…</option>
+              <option>Meeting</option>
+              <option>Teams message</option>
+              <option>Email</option>
+              <option>Call</option>
+              <option>In Person</option>
+            </select>
+            <div class="field-sub">
+              <div class="hint">Select one.</div>
+              <div class="error" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="field" data-field="effort">
+            <label for="effort">Effort/Project <span class="req">*</span></label>
+            <select id="effort">
+              <option value="">Select…</option>
+              <option>Defect Resolution</option>
+              <option>Executive Sponsor Projects</option>
+              <option>Maintenance and Operation</option>
+              <option>Legislative Mandate</option>
+              <option>User Request</option>
+              <option>Test Environment</option>
+            </select>
+            <div class="field-sub">
+              <div class="hint">Select one.</div>
+              <div class="error" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- Accordion: Confirmations -->
+    <section class="card accordion appear delay-3" data-accordion data-default="open">
+      <button class="acc-head" type="button" aria-expanded="true">
+        <div class="acc-left">
+          <h2>Confirmations</h2>
+          <span class="pill subtle">Matches Issue Form option text</span>
+        </div>
+        <div class="acc-right" aria-hidden="true">
+          <span class="chev">⌄</span>
+        </div>
+      </button>
+
+      <div class="acc-body">
+        <div class="checks">
+          <label class="check">
+            <input type="checkbox" id="chk_impacts_public" />
+            <span>Impacts the public.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="chk_involves_cdt" />
+            <span>Involves CDT.</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="chk_new_app_esd" />
+            <span>New app (ESD needs to know).</span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="chk_vendor_impact" />
+            <span>Impact a Vendors.</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Copy / Errors -->
     <section class="card appear delay-4">
       <div class="card-title">
         <h2>Copy</h2>
+        <span class="pill subtle">Issues must be labeled <strong>release</strong> + <strong>process</strong></span>
       </div>
 
       <div class="mini">
         <p class="muted">
-          Click copy, then paste the generated body into a GitHub issue created with labels
-          <strong>release</strong> and <strong>process</strong>.
+          Click copy, then paste the generated body into your GitHub issue and submit.
         </p>
-        <button id="copyBtn2" class="btn btn-primary ripple" type="button">Copy to clipboard</button>
+        <button id="copyBtn2" class="btn btn-primary ripple" type="button">
+          <span class="btn-label">Copy to clipboard</span>
+          <span class="btn-check" aria-hidden="true">✓</span>
+        </button>
       </div>
 
       <div id="msg" class="msg" aria-live="polite"></div>
     </section>
   </main>
+
+  <!-- Error modal -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h3 id="modalTitle">Please fix these fields</h3>
+        <button id="modalClose" class="icon-btn" type="button" aria-label="Close">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+      <div class="modal-actions">
+        <button id="modalOk" class="btn btn-primary ripple" type="button">
+          <span class="btn-label">Got it</span>
+          <span class="btn-check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
