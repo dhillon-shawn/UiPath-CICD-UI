@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Release – Process Request Builder</title>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div>
+      <h1>Release – Process Request Builder</h1>
+      <p class="sub">
+        Builds a GitHub Issue body that matches your <code>process.yml</code> Issue Form output format.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Target repo (optional)</h2>
+      <div class="grid2">
+        <div>
+          <label for="owner">Owner / org</label>
+          <input id="owner" placeholder="org" />
+        </div>
+        <div>
+          <label for="repo">Repo</label>
+          <input id="repo" placeholder="my-repo" />
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label for="issueTitle">Issue title (optional)</label>
+          <input id="issueTitle" placeholder="e.g. UiPath Prod release – Process XYZ" />
+        </div>
+        <div>
+          <label for="openTemplate">Issue template filename (optional)</label>
+          <input id="openTemplate" placeholder="paste-process.md" />
+          <p class="hint">If blank issues are disabled, create the optional template below and set this to its filename.</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="openIssueBtn" class="secondary" type="button">Open “New issue” (labels pre-set)</button>
+      </div>
+      <p class="hint">
+        This opens GitHub with <code>labels=release,process</code>. You’ll still paste the generated body (URLs can get too long). :contentReference[oaicite:1]{index=1}
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Requester & Schedule</h2>
+      <div class="grid2">
+        <div>
+          <label for="user_email">Requester email <span class="req">*</span></label>
+          <input id="user_email" placeholder="email@noreply.com" />
+        </div>
+        <div>
+          <label for="backup_contact">Backup contact (email) (optional)</label>
+          <input id="backup_contact" placeholder="email@noreply.com" />
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label for="target_end_date_picker">Target end date <span class="req">*</span></label>
+          <input id="target_end_date_picker" type="date" />
+          <p class="hint">We’ll output <code>MM-DD-YY</code> to match your current template expectation.</p>
+        </div>
+        <div>
+          <label for="servicenow_note">ServiceNow info (optional note)</label>
+          <input id="servicenow_note" placeholder="(Optional) Anything extra (not parsed today)" />
+          <p class="hint">Not part of your current process.yml fields; included nowhere unless you add it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Overview</h2>
+      <label for="description">Description <span class="req">*</span></label>
+      <textarea id="description" placeholder="Put as much detail as possible about the change. Paste any necessary info/technical details."></textarea>
+
+      <label for="business_value">Business value (executive summary) <span class="req">*</span></label>
+      <textarea id="business_value" placeholder="Business-speak: benefits, outcomes, KPIs, etc."></textarea>
+
+      <label for="implementation_plan">Implementation plan <span class="req">*</span></label>
+      <textarea id="implementation_plan" placeholder="Explain the implementation plan, providing details."></textarea>
+
+      <label for="backout_plan">Backout plan <span class="req">*</span></label>
+      <textarea id="backout_plan" placeholder="How to revert the change if needed."></textarea>
+
+      <label for="validation_plan">Validation plan <span class="req">*</span></label>
+      <textarea id="validation_plan" placeholder="Pre/post checks, success criteria, monitoring, etc."></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Audience & Contacts</h2>
+      <label for="impacted_groups">Impacted groups <span class="req">*</span></label>
+      <input id="impacted_groups" placeholder="Group name(s)" />
+
+      <label for="impacted_users_emails">Leadership notified (email) <span class="req">*</span></label>
+      <input id="impacted_users_emails" placeholder="email@noreply.com" />
+
+      <div class="grid2">
+        <div>
+          <label for="last_notified_when_picker">When were impacted users last notified? <span class="req">*</span></label>
+          <input id="last_notified_when_picker" type="date" />
+          <p class="hint">We’ll output <code>MM/DD/YY</code> per your template placeholder.</p>
+        </div>
+        <div>
+          <label for="last_notified_how">How were impacted users last notified? <span class="req">*</span></label>
+          <select id="last_notified_how">
+            <option value="">Select…</option>
+            <option>Meeting</option>
+            <option>Teams message</option>
+            <option>Email</option>
+            <option>Call</option>
+            <option>In Person</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="effort">Effort/Project <span class="req">*</span></label>
+      <select id="effort">
+        <option value="">Select…</option>
+        <option>Defect Resolution</option>
+        <option>Executive Sponsor Projects</option>
+        <option>Maintenance and Operation</option>
+        <option>Legislative Mandate</option>
+        <option>User Request</option>
+        <option>Test Environment</option>
+      </select>
+    </section>
+
+    <section class="card">
+      <h2>Confirmations</h2>
+      <p class="hint">Labels must match your template option text so your parser slug keys line up.</p>
+
+      <div class="checks">
+        <label><input type="checkbox" id="chk_impacts_public" /> Impacts the public.</label>
+        <label><input type="checkbox" id="chk_involves_cdt" /> Involves CDT.</label>
+        <label><input type="checkbox" id="chk_new_app_esd" /> New app (ESD needs to know).</label>
+        <label><input type="checkbox" id="chk_vendor_impact" /> Impact a Vendors.</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Generate</h2>
+      <div class="actions">
+        <button id="previewBtn" type="button">Preview</button>
+        <button id="copyBtn" class="primary" type="button">Copy to clipboard</button>
+      </div>
+      <div id="msg" class="msg"></div>
+
+      <h3>Preview output</h3>
+      <pre id="preview" class="preview">(Click Preview)</pre>
+      <p class="hint">
+        Output matches the Issue Forms body format (headings + values, checkboxes as task list). :contentReference[oaicite:2]{index=2}
+      </p>
+    </section>
+  </main>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
