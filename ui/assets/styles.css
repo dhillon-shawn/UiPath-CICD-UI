@@ -1,11 +1,12 @@
 /* Dracula-inspired Material Dark */
 :root{
   --bg: #282a36;
-  --panel: rgba(68, 71, 90, 0.35);        /* currentLine-ish */
-  --panelSolid: rgba(68, 71, 90, 0.55);
   --text: #f8f8f2;
-  --muted: rgba(248, 248, 242, 0.70);
+  --muted: rgba(248, 248, 242, 0.72);
   --line: rgba(248, 248, 242, 0.10);
+
+  --panel: rgba(68, 71, 90, 0.30);
+  --panelSolid: rgba(68, 71, 90, 0.52);
 
   --purple: #bd93f9;
   --purple2: #a679ff;
@@ -14,7 +15,7 @@
   --red: #ff5555;
 
   --radius: 16px;
-  --shadow: 0 18px 50px rgba(0,0,0,0.38);
+  --shadow: 0 18px 50px rgba(0,0,0,0.40);
 }
 
 *{ box-sizing:border-box; }
@@ -24,21 +25,14 @@ body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   color: var(--text);
-  background:
-    radial-gradient(900px 600px at 15% -10%, rgba(189,147,249,0.22) 0%, transparent 55%),
-    radial-gradient(900px 600px at 105% 15%, rgba(255,121,198,0.14) 0%, transparent 55%),
-    radial-gradient(800px 600px at 50% 110%, rgba(80,250,123,0.08) 0%, transparent 55%),
-    var(--bg);
-}
 
-.bg-glow{
-  position: fixed;
-  inset: 0;
-  pointer-events:none;
-  background:
-    radial-gradient(700px 420px at 40% 15%, rgba(189,147,249,0.14) 0%, transparent 60%),
-    radial-gradient(600px 420px at 70% 75%, rgba(255,121,198,0.10) 0%, transparent 60%);
-  opacity: 0.9;
+  /* Seamless background (no mid-page banding) */
+  background-color: var(--bg);
+  background-attachment: fixed;
+  background-image:
+    radial-gradient(900px 650px at 15% -10%, rgba(189,147,249,0.22) 0%, transparent 55%),
+    radial-gradient(900px 650px at 105% 15%, rgba(255,121,198,0.14) 0%, transparent 55%),
+    radial-gradient(800px 650px at 50% 110%, rgba(80,250,123,0.08) 0%, transparent 55%);
 }
 
 .container{
@@ -52,8 +46,8 @@ body{
   position: sticky;
   top: 0;
   z-index: 10;
-  backdrop-filter: blur(10px);
-  background: rgba(40, 42, 54, 0.70);
+  backdrop-filter: blur(12px);
+  background: rgba(40, 42, 54, 0.72);
   border-bottom: 1px solid var(--line);
 }
 
@@ -71,24 +65,17 @@ body{
   display:flex;
   align-items:center;
   gap: 12px;
-  min-width: 0; /* allow ellipsis on text */
+  min-width: 0;
 }
-
 .logo{
   width: 40px;
   height: 40px;
   border-radius: 14px;
-  display:grid;
-  place-items:center;
-  background: linear-gradient(135deg, rgba(189,147,249,0.35), rgba(255,121,198,0.22));
   border: 1px solid var(--line);
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  color: var(--text);
+  flex: 0 0 auto;
 }
-
-.brand-text{
-  min-width: 0;
-}
+.brand-text{ min-width: 0; }
 .brand-text h1{
   margin:0;
   font-size: 15px;
@@ -103,12 +90,16 @@ body{
   text-overflow: ellipsis;
   max-width: 62vw;
 }
-
 .topbar-actions{
   display:flex;
   align-items:center;
   gap: 10px;
   flex: 0 0 auto;
+}
+
+@media (max-width: 760px){
+  .brand-text p{ max-width: 70vw; }
+  .topbar-inner{ align-items:flex-start; }
 }
 
 /* Cards */
@@ -147,6 +138,7 @@ body{
   border: 1px solid var(--line);
   color: var(--muted);
 }
+.pill.subtle{ opacity: 0.85; }
 
 /* Fields */
 .field{ margin-top: 10px; }
@@ -166,17 +158,17 @@ input, select, textarea{
   background: rgba(40,42,54,0.55);
   color: var(--text);
   outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
 }
-textarea{
-  min-height: 120px;
-  resize: vertical;
-  line-height: 1.35;
-}
-
 input:focus, select:focus, textarea:focus{
   border-color: rgba(189,147,249,0.65);
   box-shadow: 0 0 0 4px rgba(189,147,249,0.18);
+}
+textarea{
+  resize: none; /* autosize handled by JS */
+  line-height: 1.35;
+  overflow: hidden;
+  min-height: 56px; /* starts short */
 }
 
 .grid2{
@@ -186,8 +178,6 @@ input:focus, select:focus, textarea:focus{
 }
 @media (max-width: 760px){
   .grid2{ grid-template-columns: 1fr; }
-  .brand-text p{ max-width: 70vw; }
-  .topbar-inner{ align-items: flex-start; }
 }
 
 .hint{
@@ -203,7 +193,7 @@ code{
   color: rgba(248,248,242,0.94);
 }
 
-/* Confirmations — FIXED alignment */
+/* Confirmations */
 .checks{
   display:grid;
   gap: 10px;
@@ -211,9 +201,9 @@ code{
 }
 
 .check{
-  display:flex;              /* keep checkbox + text together */
+  display:flex;
   align-items:center;
-  justify-content:flex-start; /* prevent weird spacing */
+  justify-content:flex-start;
   gap: 10px;
   padding: 10px 12px;
   border-radius: 14px;
@@ -222,31 +212,30 @@ code{
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
   cursor: pointer;
 }
-
 .check:hover{
   transform: translateY(-1px);
   border-color: rgba(248,248,242,0.14);
-  background: rgba(68,71,90,0.35);
+  background: rgba(68,71,90,0.32);
 }
-
 .check input{
   width: 18px;
   height: 18px;
   margin: 0;
-  flex: 0 0 auto;           /* don't stretch */
+  flex: 0 0 auto;
   accent-color: var(--purple);
 }
-
 .check span{
   flex: 1 1 auto;
-  text-align: left;         /* ensures text isn't pushed */
+  text-align: left;
 }
 
-/* Buttons — more Material-ish */
+/* Buttons (Material-ish) */
 .btn{
+  position: relative;
+  overflow: hidden;
   border: 1px solid rgba(248,248,242,0.14);
   border-radius: 12px;
-  padding: 10px 12px;
+  padding: 10px 14px;
   background: rgba(68,71,90,0.22);
   color: var(--text);
   cursor: pointer;
@@ -265,12 +254,41 @@ code{
   background: linear-gradient(135deg, var(--purple2), var(--purple));
   border-color: transparent;
   color: #16151f;
-  font-weight: 800;
+  font-weight: 850;
   box-shadow: 0 10px 30px rgba(189,147,249,0.18);
 }
 .btn-primary:hover{
   background: linear-gradient(135deg, var(--purple), var(--pink));
 }
+
+/* Ripple */
+.ripple::after{
+  content:"";
+  position:absolute;
+  inset:auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events:none;
+}
+.ripple.rippling::after{
+  left: var(--rx);
+  top: var(--ry);
+  transform: translate(-50%,-50%) scale(18);
+  opacity: 0;
+  transition: transform 520ms ease, opacity 520ms ease;
+}
+
+.mini{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.muted{ color: var(--muted); margin: 0; }
 
 /* Message box */
 .msg{
@@ -313,7 +331,7 @@ code{
   transform: translateY(0);
 }
 
-/* Subtle entrance */
+/* Entrance */
 .appear{
   animation: in 420ms cubic-bezier(.2,.8,.2,1) both;
 }

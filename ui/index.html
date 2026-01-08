@@ -8,20 +8,18 @@
 </head>
 
 <body>
-  <div class="bg-glow"></div>
-
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="logo" aria-hidden="true">◆</div>
+        <img class="logo" src="./assets/logo.svg" alt="Portal logo" />
         <div class="brand-text">
           <h1>Release – Process Request Builder</h1>
-          <p>Fill the form → copy → paste into a GitHub issue body (same parser, better UI).</p>
+          <p>Fill the form → Copy → paste into a GitHub issue body (same parser, better UI).</p>
         </div>
       </div>
 
       <div class="topbar-actions">
-        <button id="copyBtn" class="btn btn-primary" type="button">
+        <button id="copyBtn" class="btn btn-primary ripple" type="button">
           Copy to clipboard
         </button>
       </div>
@@ -51,13 +49,15 @@
         <div class="field">
           <label for="target_end_date_picker">Target end date <span class="req">*</span></label>
           <input id="target_end_date_picker" type="date" />
-          <div class="hint">Outputs <code>MM-DD-YY</code>. Your workflow normalizes to 05:30am PT.</div>
+          <div class="hint">
+            Cannot be <em>today</em>. Output is <code>MM-DD-YY</code>. Workflow normalizes to 05:30am PT.
+          </div>
         </div>
 
         <div class="field">
-          <label for="notes">Notes (not parsed)</label>
-          <input id="notes" placeholder="Optional: internal note for yourself" />
-          <div class="hint">Not included in the copied output (unless you want it).</div>
+          <label for="last_notified_when_picker">When were impacted users last notified? <span class="req">*</span></label>
+          <input id="last_notified_when_picker" type="date" />
+          <div class="hint">Output is <code>MM/DD/YY</code>. Cannot be in the future.</div>
         </div>
       </div>
     </section>
@@ -69,27 +69,32 @@
 
       <div class="field">
         <label for="description">Description <span class="req">*</span></label>
-        <textarea id="description" placeholder="Put as much detail as possible about the change. Paste any necessary info/technical details."></textarea>
+        <textarea id="description" rows="3"
+          placeholder="Put as much detail as possible about the change. Paste any necessary info/technical details."></textarea>
       </div>
 
       <div class="field">
         <label for="business_value">Business value (executive summary) <span class="req">*</span></label>
-        <textarea id="business_value" placeholder="Business-speak: benefits, outcomes, KPIs, etc."></textarea>
+        <textarea id="business_value" rows="2"
+          placeholder="Business-speak: benefits, outcomes, KPIs, etc."></textarea>
       </div>
 
       <div class="field">
         <label for="implementation_plan">Implementation plan <span class="req">*</span></label>
-        <textarea id="implementation_plan" placeholder="Explain the implementation plan, providing details."></textarea>
+        <textarea id="implementation_plan" rows="2"
+          placeholder="Explain the implementation plan, providing details."></textarea>
       </div>
 
       <div class="field">
         <label for="backout_plan">Backout plan <span class="req">*</span></label>
-        <textarea id="backout_plan" placeholder="How to revert the change if needed."></textarea>
+        <textarea id="backout_plan" rows="2"
+          placeholder="How to revert the change if needed."></textarea>
       </div>
 
       <div class="field">
         <label for="validation_plan">Validation plan <span class="req">*</span></label>
-        <textarea id="validation_plan" placeholder="Pre/post checks, success criteria, monitoring, etc."></textarea>
+        <textarea id="validation_plan" rows="2"
+          placeholder="Pre/post checks, success criteria, monitoring, etc."></textarea>
       </div>
     </section>
 
@@ -104,18 +109,13 @@
       </div>
 
       <div class="field">
-        <!-- keep label spacing EXACTLY as template: "Leadership notified  (email)" -->
+        <!-- Keep EXACT spacing to match your issue form label -->
         <label for="impacted_users_emails">Leadership notified  (email) <span class="req">*</span></label>
         <input id="impacted_users_emails" placeholder="email@noreply.com" autocomplete="email" />
+        <div class="hint">You can paste multiple emails separated by commas/spaces.</div>
       </div>
 
       <div class="grid2">
-        <div class="field">
-          <label for="last_notified_when_picker">When were impacted users last notified? <span class="req">*</span></label>
-          <input id="last_notified_when_picker" type="date" />
-          <div class="hint">Outputs <code>MM/DD/YY</code>.</div>
-        </div>
-
         <div class="field">
           <label for="last_notified_how">How were impacted users last notified? <span class="req">*</span></label>
           <select id="last_notified_how">
@@ -127,26 +127,26 @@
             <option>In Person</option>
           </select>
         </div>
-      </div>
 
-      <div class="field">
-        <label for="effort">Effort/Project <span class="req">*</span></label>
-        <select id="effort">
-          <option value="">Select…</option>
-          <option>Defect Resolution</option>
-          <option>Executive Sponsor Projects</option>
-          <option>Maintenance and Operation</option>
-          <option>Legislative Mandate</option>
-          <option>User Request</option>
-          <option>Test Environment</option>
-        </select>
+        <div class="field">
+          <label for="effort">Effort/Project <span class="req">*</span></label>
+          <select id="effort">
+            <option value="">Select…</option>
+            <option>Defect Resolution</option>
+            <option>Executive Sponsor Projects</option>
+            <option>Maintenance and Operation</option>
+            <option>Legislative Mandate</option>
+            <option>User Request</option>
+            <option>Test Environment</option>
+          </select>
+        </div>
       </div>
     </section>
 
     <section class="card appear delay-3">
       <div class="card-title">
         <h2>Confirmations</h2>
-        <span class="pill subtle">Matches your Issue Form option text</span>
+        <span class="pill subtle">Matches Issue Form option text</span>
       </div>
 
       <div class="checks">
@@ -167,23 +167,19 @@
           <span>Impact a Vendors.</span>
         </label>
       </div>
-
+    </section>
 
     <section class="card appear delay-4">
       <div class="card-title">
-        <h2>Output</h2>
+        <h2>Copy</h2>
       </div>
 
       <div class="mini">
-        <div class="mini-left">
-          <p class="muted">
-            Clicking <strong>Copy to clipboard</strong> generates the GitHub Issue Forms-style body
-            (headings + values + task list). Paste it into your issue body and submit.
-          </p>
-        </div>
-        <div class="mini-right">
-          <button id="copyBtn2" class="btn btn-primary" type="button">Copy to clipboard</button>
-        </div>
+        <p class="muted">
+          Click copy, then paste the generated body into a GitHub issue created with labels
+          <strong>release</strong> and <strong>process</strong>.
+        </p>
+        <button id="copyBtn2" class="btn btn-primary ripple" type="button">Copy to clipboard</button>
       </div>
 
       <div id="msg" class="msg" aria-live="polite"></div>
